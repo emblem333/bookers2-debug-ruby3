@@ -4,12 +4,18 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
     @user = @book.user
     @book_show = Book.new
+    #↓ｺﾒﾝﾄ用変数
+    #@comment_show = Book.find(params[:id])
+    @book_comment = Book.new
   end
 
   def index
     @book = Book.new
     @books = Book.all
     @user = current_user
+    #↓ｺﾒﾝﾄ用変数
+    #@comment = Book.find(params[:id])
+    #@book_comment = Book.new
   end
 
   def create

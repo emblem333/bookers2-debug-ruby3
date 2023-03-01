@@ -8,10 +8,13 @@ class BookCommentsController < ApplicationController
 
     comment.book_id = book.id
     comment.save
-    redirect_to book_path(book)
+    redirect_to request.referer
+    #redirect_to request.refererを使うと簡単に同じページに遷移 #book_path(book)
   end
 
   def destroy
+    BookComment.find_by(id: params[:id], book_id: params[:book_id]).destroy
+    redirect_to request.referer
   end
 
   private

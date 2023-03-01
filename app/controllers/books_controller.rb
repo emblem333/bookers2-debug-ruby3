@@ -1,18 +1,20 @@
 class BooksController < ApplicationController
-  before_action :is_matching_login_user, only: [:edit, :update]
+  before_action :authenticate_user!
+  before_action :is_matching_login_user, only: [:edit, :update,:destroy]
+
   def show
     @book = Book.find(params[:id])
-    @user = @book.user
-    @book_show = Book.new
+    #@user = @book.user
+    #@book_show = Book.new
     #↓ｺﾒﾝﾄ用変数
     #@comment_show = Book.find(params[:id])
-    @book_comment = Book.new
+    @book_comment = BookComment.new
   end
 
   def index
     @book = Book.new
     @books = Book.all
-    @user = current_user
+    #@user = current_user
     #↓ｺﾒﾝﾄ用変数
     #@comment = Book.find(params[:id])
     #@book_comment = Book.new
@@ -30,11 +32,11 @@ class BooksController < ApplicationController
   end
 
   def edit
-    @book = Book.find(params[:id])
+    #@book = Book.find(params[:id])
   end
 
   def update
-    @book = Book.find(params[:id])
+    #@book = Book.find(params[:id])
     if @book.update(book_params)
       redirect_to book_path(@book), notice: "You have updated book successfully."
     else
@@ -43,7 +45,7 @@ class BooksController < ApplicationController
   end
 
   def destroy
-    @book = Book.find(params[:id])
+    #@book = Book.find(params[:id])
     @book.destroy
     redirect_to books_path
   end
@@ -54,13 +56,13 @@ class BooksController < ApplicationController
     params.require(:book).permit(:title,:body)
   end
 
-  def user_params
-    params.require(:user).permit(:name,:profile_image,:introduction)
-  end
+  #def user_params
+  #  params.require(:user).permit(:name,:profile_image,:introduction)
+  #end
 
   def is_matching_login_user
     @book = Book.find(params[:id])
-    unless @book.user.id == current_user.id
+    unless @book.user == current_user
       redirect_to books_path
     end
   end

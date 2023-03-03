@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index,:show,:edit,:update] do
       #ﾌｫﾛｰ機能 (ネストさせる)
     resource :relationships, only: [:create, :destroy]
-      get :followings, on: :member
+      get :followings, on: :member #params[:id]にできる(付けない場合はparams[user_id])
       get :followers, on: :member
     #get 'followings' => 'relationships#followings', as: 'followings'
     #get 'followers' => 'relationships#followers', as: 'followers'

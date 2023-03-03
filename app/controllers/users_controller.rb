@@ -1,15 +1,16 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update,:edit]
 
-  #def followings
-  #  user = User.find(params[:user_id])
-  #  @users = user.followings
-  #end
-
-  #def followers
-  #  user = User.find(params[:user_id])
-  #  @users = user.followers
-  #end
+    # フォロー一覧
+  def followings
+    user = User.find(params[:id])
+    @users = user.followings
+  end
+  # フォロワー一覧
+  def followers
+    user = User.find(params[:id])
+    @users = user.followers
+  end
 
   def show
     @user = User.find(params[:id])

@@ -1,6 +1,16 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update,:edit]
 
+  #def followings
+  #  user = User.find(params[:user_id])
+  #  @users = user.followings
+  #end
+
+  #def followers
+  #  user = User.find(params[:user_id])
+  #  @users = user.followers
+  #end
+
   def show
     @user = User.find(params[:id])
     @books = @user.books
@@ -8,6 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
+    @user = User.where.not(id: current_user.id)
     @users = User.all
     @book = Book.new
   end

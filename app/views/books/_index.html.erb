@@ -19,7 +19,10 @@
           <%#= book.title %>
           <td><%= book.body %></td>
           <td>コメント数: <%= book.book_comments.count %></td>
-          <td><%= render "favorites/favo", book: book %></td>
+          <!--(非同期通信)部分テンプレートにした箇所(部分的に更新したい箇所)-->
+　　      <td id="favorite_buttons_<%= book.id %>">
+          <%= render "favorites/favo", book: book %>
+          </td>
       </tr>
     <% end %>
   </tbody>

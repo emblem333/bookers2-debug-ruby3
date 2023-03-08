@@ -7,19 +7,24 @@ class BookCommentsController < ApplicationController
     #↑と同じ意味comment.user_id = current_user.id
 
     @comment.book_id = @book.id
-    @comment.save
-    render :asynchronous_form
-    #redirect_to request.referer
-    #redirect_to request.refererを使うと簡単に同じページに遷移 #book_path(book)
+    if @comment.save
+      #redirect_to request.referer
+      #redirect_to request.refererを使うと簡単に同じページに遷移 #book_path(book)
+      #@book_comment = BookComment.new
+      render :create_form
+    else
+      render 'books/show'
+    end
   end
 
   def destroy
     BookComment.find_by(id: params[:id], book_id: params[:book_id]).destroy
-    flash.now[:alert] = '投稿を削除しました'
-    #renderしたときに@postのデータがないので@postを定義
-    @book = Book.find(params[:book_id])
-    render :asynchronous_form
+
+    @book = Book.find(params[:book_id])#renderしたときに@bookのデータがないので@bookを定義
+
+    #flash.now[:alert] = '投稿を削除しました'
     #redirect_to request.referer
+    render :create_form
   end
 
   private
